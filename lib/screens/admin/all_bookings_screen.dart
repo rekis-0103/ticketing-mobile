@@ -124,7 +124,7 @@ class _AllBookingsScreenState extends State<AllBookingsScreen> {
               children: [
                 Expanded(
                   child: StatCard(
-                    title: 'Total Bookings',
+                    title: 'Total Pesanan',
                     value: totalBookings.toString(),
                     icon: Icons.confirmation_number,
                     color: Colors.blue,
@@ -133,7 +133,7 @@ class _AllBookingsScreenState extends State<AllBookingsScreen> {
                 const SizedBox(width: 16),
                 Expanded(
                   child: StatCard(
-                    title: 'Total Revenue',
+                    title: 'Total Pendapatan',
                     value: 'Rp ${totalRevenue.toStringAsFixed(0)}',
                     icon: Icons.monetization_on,
                     color: Colors.green,
@@ -146,7 +146,7 @@ class _AllBookingsScreenState extends State<AllBookingsScreen> {
               children: [
                 Expanded(
                   child: StatCard(
-                    title: 'Available Routes',
+                    title: 'Rute Tersedia',
                     value: transportations.length.toString(),
                     icon: Icons.route,
                     color: Colors.orange,
@@ -155,7 +155,7 @@ class _AllBookingsScreenState extends State<AllBookingsScreen> {
                 const SizedBox(width: 16),
                 Expanded(
                   child: StatCard(
-                    title: 'Active Users',
+                    title: 'User Aktif',
                     value: '1',
                     icon: Icons.people,
                     color: Colors.purple,
@@ -337,17 +337,17 @@ class _AllBookingsScreenState extends State<AllBookingsScreen> {
           ),
           pw.SizedBox(height: 8),
           pw.Bullet(
-            text: 'Total Bookings: $totalBookings',
+            text: 'Total Pemesanan: $totalBookings',
             style: pw.TextStyle(fontSize: 14),
             bulletColor: PdfColors.blue700,
           ),
           pw.Bullet(
-            text: 'Total Revenue: Rp ${totalRevenue.toStringAsFixed(0)}',
+            text: 'Total Pendapatan: Rp ${totalRevenue.toStringAsFixed(0)}',
             style: pw.TextStyle(fontSize: 14),
             bulletColor: PdfColors.blue700,
           ),
           pw.Bullet(
-            text: 'Available Routes: ${transportations.length}',
+            text: 'Rute Tersedia: ${transportations.length}',
             style: pw.TextStyle(fontSize: 14),
             bulletColor: PdfColors.blue700,
           ),
@@ -405,25 +405,50 @@ class _AllBookingsScreenState extends State<AllBookingsScreen> {
                 6: pw.Alignment.center,
               },
               headers: [
-                'Transport',
-                'Route',
-                'Type',
+                'Transportasi',
+                'Rute',
+                'Tipe',
                 'Qty',
-                'Price',
+                'Harga',
                 'Status',
-                'Date',
+                'Tanggal',
               ],
               data: tickets.map((t) {
-                return [
-                  t.transportation.name,
-                  t.transportation.route,
-                  t.transportation.type,
-                  t.quantity.toString(),
-                  'Rp ${t.totalPrice.toStringAsFixed(0)}',
-                  t.status,
-                  '${t.bookingDate.day.toString().padLeft(2, '0')}/${t.bookingDate.month.toString().padLeft(2, '0')}/${t.bookingDate.year}',
-                ];
-              }).toList(),
+  // Konversi nama transportasi
+  String localizedTransportName = t.transportation.name;
+  if (localizedTransportName.toLowerCase().contains('train')) {
+    localizedTransportName = localizedTransportName.replaceAll(RegExp(r'train', caseSensitive: false), 'Kereta');
+  } else if (localizedTransportName.toLowerCase().contains('plane')) {
+    localizedTransportName = localizedTransportName.replaceAll(RegExp(r'plane', caseSensitive: false), 'Pesawat');
+  } else if (localizedTransportName.toLowerCase().contains('car')) {
+    localizedTransportName = localizedTransportName.replaceAll(RegExp(r'car', caseSensitive: false), 'Bis');
+  }
+
+  // Konversi tipe transportasi
+  String localizedType = t.transportation.type;
+  switch (localizedType) {
+    case 'train':
+      localizedType = 'Kereta';
+      break;
+    case 'plane':
+      localizedType = 'Pesawat';
+      break;
+    case 'car':
+      localizedType = 'Bis';
+      break;
+  }
+
+  return [
+    localizedTransportName,
+    t.transportation.route,
+    localizedType,
+    t.quantity.toString(),
+    'Rp ${t.totalPrice.toStringAsFixed(0)}',
+    t.status,
+    '${t.bookingDate.day.toString().padLeft(2, '0')}/${t.bookingDate.month.toString().padLeft(2, '0')}/${t.bookingDate.year}',
+  ];
+}).toList(),
+
             ),
         ],
         footer: footer,

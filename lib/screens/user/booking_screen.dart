@@ -403,4 +403,11 @@ class _BookingScreenState extends State<BookingScreen> {
       );
     }
   }
+  IconData getIconFromName(String name) {
+  final lower = name.toLowerCase();
+  if (lower.contains('train')) return Icons.train;
+  if (lower.contains('car')) return Icons.directions_bus;
+  if (lower.contains('plane')) return Icons.flight;
+  return Icons.directions_transit;
+}
 }

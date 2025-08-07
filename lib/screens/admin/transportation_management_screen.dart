@@ -120,7 +120,7 @@ class TransportationManagementScreenState extends State<TransportationManagement
                         borderRadius: BorderRadius.circular(12),
                       ),
                       child: Icon(
-                        transportation.icon,
+                        getIconFromName(transportation.name),
                         color: Colors.blue.shade600,
                         size: 28,
                       ),
@@ -269,4 +269,12 @@ class TransportationManagementScreenState extends State<TransportationManagement
       ),
     );
   }
+  IconData getIconFromName(String name) {
+  final lower = name.toLowerCase();
+  if (lower.contains('train')) return Icons.train;
+  if (lower.contains('car')) return Icons.directions_bus;
+  if (lower.contains('plane')) return Icons.flight;
+  return Icons.directions_transit;
+}
+
 }

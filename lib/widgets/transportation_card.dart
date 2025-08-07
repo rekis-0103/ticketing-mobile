@@ -36,7 +36,7 @@ class TransportationCard extends StatelessWidget {
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: Icon(
-                      transportation.icon,
+                      _getIconForType(transportation.type),
                       color: Colors.blue.shade600,
                       size: 28,
                     ),
@@ -116,4 +116,17 @@ class TransportationCard extends StatelessWidget {
       ),
     );
   }
+  IconData _getIconForType(String type) {
+  switch (type) {
+    case 'train':
+      return Icons.train;
+    case 'plane':
+      return Icons.flight;
+    case 'car':
+      return Icons.directions_bus;
+    default:
+      return Icons.directions_transit;
+  }
+}
+
 }

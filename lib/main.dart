@@ -10,8 +10,8 @@ import 'services/app_state.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await AppState.initialize();
-  runApp(const TicketingApp());
   await DataRepository.setCurrentUser(null);
+  runApp(const TicketingApp());
 }
 
 class TicketingApp extends StatelessWidget {
