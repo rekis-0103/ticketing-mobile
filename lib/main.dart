@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/core.dart';
 import 'screens/auth/login_screen.dart';
-import 'screens/auth/register_screen.dart'; // ⬅️ Tambahkan ini
+import 'screens/auth/register_screen.dart';
 import 'screens/user/user_dashboard.dart';
 import 'screens/admin/admin_dashboard.dart';
 import 'services/app_state.dart';
